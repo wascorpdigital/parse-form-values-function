@@ -19,12 +19,17 @@ export const getFormData = (form) => {
                     case 'button':
                     case 'reset':
                     case 'submit':
-                        formData[form.elements[index].name] = form.elements[index].value;
+                        if (form.elements[index].value.trim()) {
+                            formData[form.elements[index].name] = form.elements[index].value;
+                        }
                         break;
                     case 'radio':
                         if (form.elements[index].checked) {
                             formData[form.elements[index].name] = form.elements[index].value;
                         }
+                        break;
+                    case 'file':
+                        // TODO: logic
                         break;
                 }
             case 'checkbox':
@@ -37,34 +42,27 @@ export const getFormData = (form) => {
                     }
                 }
                 break;
-            case 'file':
-                break;
             case 'TEXTAREA':
-                formData[form.elements[index].name] = form.elements[index].value;
-                break;
-            case 'SELECT':
-                switch (form.elements[index].type) {
-                    case 'select-one':
-                        formData[form.elements[index].name] = form.elements[index].value;
-                        break;
-                    case 'select-multiple':
-                        const multi = []
-                        for (let i = 0; i < form.elements[index].options.length; i++) {
-                            if (form.elements[index].options[i].selected) {
-                                multi.push(form.elements[index].options[i].value)
-                                formData[form.elements[index].name] = multi;
-                            }
-                        }
-                        break;
+                if (form.elements[index].value.trim()) {
+                    formData[form.elements[index].name] = form.elements[index].value;
                 }
                 break;
-            case 'BUTTON':
-                switch (form.elements[index].type) {
-                    case 'reset':
-                    case 'submit':
-                    case 'button':
-                        formData[form.elements[index].name] = form.elements[index].value;
-                        break;
+            case 'SELECT':
+                if (form.elements[index].value.trim()) {
+                    switch (form.elements[index].type) {
+                        case 'select-one':
+                            formData[form.elements[index].name] = form.elements[index].value;
+                            break;
+                        case 'select-multiple':
+                            const multi = []
+                            for (let i = 0; i < form.elements[index].options.length; i++) {
+                                if (form.elements[index].options[i].selected) {
+                                    multi.push(form.elements[index].options[i].value)
+                                    formData[form.elements[index].name] = multi;
+                                }
+                            }
+                            break;
+                    }
                 }
                 break;
         }
