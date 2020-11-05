@@ -54,11 +54,11 @@ export const getFormData = (form) => {
                             formData[form.elements[index].name] = form.elements[index].value;
                             break;
                         case 'select-multiple':
-                            const multi = []
+                            const multi = [] 
                             for (let i = 0; i < form.elements[index].options.length; i++) {
                                 if (form.elements[index].options[i].selected) {
                                     multi.push(form.elements[index].options[i].value)
-                                    formData[form.elements[index].name] = multi;
+                                    formData[form.elements[index].name] = multi.toString(); // remove toString() for array
                                 }
                             }
                             break;
