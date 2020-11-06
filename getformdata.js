@@ -17,21 +17,12 @@ export const getFormData = (form) => {
                     case 'email':
                     case 'password':
                     case 'button':
-                    case 'reset':
-                    case 'submit':
                         if (form.elements[index].value.trim()) {
                             formData[form.elements[index].name] = form.elements[index].value;
                         }
                         break;
-                    case 'radio':
-                        if (form.elements[index].checked) {
-                            formData[form.elements[index].name] = form.elements[index].value;
-                        }
-                        break;
-                    case 'file':
-                        // TODO: logic
-                        break;
                 }
+            case 'radio':
             case 'checkbox':
                 if (form.elements[index].checked) {
                     if (form.elements[index].name in formData) {
